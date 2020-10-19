@@ -14,9 +14,9 @@ Rename-Computer -NewName $hostname
 Set-TimeZone -Id $timezone 
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-New-NetIPAddress –InterfaceAlias $network_interface –IPv4Address $ip_Address –PrefixLength $subnet_mask -DefaultGateway $default_gateway
-Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
-Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
+#New-NetIPAddress –InterfaceAlias $network_interface –IPv4Address $ip_Address –PrefixLength $subnet_mask -DefaultGateway $default_gateway
+#Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
+#Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
 
 # install features 
 $featureLogPath = "c:\poshlog\featurelog.txt" 
