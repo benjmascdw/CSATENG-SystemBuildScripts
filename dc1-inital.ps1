@@ -16,6 +16,6 @@ Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' 
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 #New-NetIPAddress –InterfaceAlias $network_interface –IPv4Address $ip_Address –PrefixLength $subnet_mask -DefaultGateway $default_gateway
 #Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
-#Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
+Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
 
 Restart-Computer
