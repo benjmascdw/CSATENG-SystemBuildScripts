@@ -18,11 +18,4 @@ Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 #Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
 #Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
 
-# install features 
-$featureLogPath = "c:\poshlog\featurelog.txt" 
-New-Item $featureLogPath -ItemType file -Force 
-$addsTools = "RSAT-AD-Tools" 
-Add-WindowsFeature $addsTools 
-Get-WindowsFeature | Where installed >>$featureLogPath
-
 Restart-Computer

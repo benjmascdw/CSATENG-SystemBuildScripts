@@ -2,13 +2,12 @@
 # add ADDS, DNS, and GPMC
 . ./dc1-vars.ps1
 
-Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
+Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_servers
 
-$featureLogPath = "c:\poshlog\featurelog.txt"
-start-job -Name addFeature -ScriptBlock { 
+# install features 
+$addsTools = "RSAT-AD-Tools" 
+Add-WindowsFeature $addsTools 
 Add-WindowsFeature -Name "ad-domain-services" -IncludeAllSubFeature -IncludeManagementTools 
 Add-WindowsFeature -Name "dns" -IncludeAllSubFeature -IncludeManagementTools 
-Add-WindowsFeature -Name "gpmc" -IncludeAllSubFeature -IncludeManagementTools } 
-Wait-Job -Name addFeature 
-Get-WindowsFeature | Where installed >> $featureLogPath
+Add-WindowsFeature -Name "gpmc" -IncludeAllSubFeature -IncludeManagementTools
 
