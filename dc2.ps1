@@ -16,7 +16,8 @@ $default_gateway = "10.89.49.1"
 $dns_Servers = "10.89.49.50, 10.89.49.51"
 $timezone = "Central Standard Time"
 
-if ((Test-Path "c:\stage1complete.txt" -PathType Leaf) -eq $false) {
+$stage_check = Test-Path "c:\stage1complete.txt" -PathType Leaf
+if ($stage_check -eq $false) {
     Rename-Computer -NewName $hostname 
     # Set timezone
     Set-TimeZone -Id $timezone 
@@ -35,10 +36,11 @@ if ((Test-Path "c:\stage1complete.txt" -PathType Leaf) -eq $false) {
     Restart-Computer
 
 }
+
+Remove-Item "c:\stage1complete.txt"
 # http://harmikbatth.com/2017/04/25/active-directory-installing-second-or-additional-domain-controller/#page-content
 Install-WindowsFeature -Name AD-Domain-Services –IncludeManagementTools
 Import-module ADDSDeployment
 
 Install-ADDSDomainController -Credential (Get-Credential) -NoGlobalCatalog:$false -CreateDnsDelegation:$false -CriticalReplicationOnly:$false -DatabasePath "C:\Windows\NTDS" -DomainName $domain_name -InstallDns:$true -LogPath "C:\Windows\NTDS" -NoRebootOnCompletion:$false -SiteName "Default-First-Site-Name" -SysvolPath "C:\Windows\SYSVOL" -Force:$true
 
-Restart-Computer
