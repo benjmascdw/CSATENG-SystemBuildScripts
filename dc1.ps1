@@ -3,18 +3,18 @@
 # Author: Ben Mason
 #
 
-# File containing Computer Specific Settings
-. ./dc1-vars.ps1
-
+# Disable IP Address configurtation
 $setipaddress = $false
-# $domain_name = "csateng.lab"
-# $hostname = "DC1"
-# $network_interface = "Ethernet0"e
-# $ip_Address = "10.89.49.68"
-# $subnet_mask = "26"
-# $default_gateway = "10.89.49.65"
-# $dns_Servers = "10.89.49.50, 10.89.49.51"
-# $timezone = "Central Standard Time"
+#
+$domain_name = "csateng.lab"
+$netbiosName = "CSATENG"
+$hostname = "DC1"
+$network_interface = "Ethernet0"
+$ip_Address = "10.89.49.50"
+$subnet_mask = "26"
+$default_gateway = "10.89.49.1"
+$dns_servers = "10.89.49.50, 10.89.49.51"
+$timezone = "Central Standard Time"
 
 ####
 # Purpose: Initial computer configuration
@@ -73,7 +73,7 @@ if ($stage_check -eq $false) {
     # Enable Certificate services
     Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
     Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools
-    Install-ADcsCertificationAuthority –Credential (Get-Credential) -CAType StandaloneRootCA –CACommonName “csateng-Host1-CA-1” –CADistinguishedNameSuffix “DC=csateng,DC=lab” –CryptoProviderName “RSA#Microsoft Software Key Storage Provider” -KeyLength 2048 –HashAlgorithmName SHA1 –ValidityPeriod Years –ValidityPeriodUnits 3 –DatabaseDirectory “C:\windows\system32\certLog” –LogDirectory “c:\windows\system32\CertLog” –Force
+    Install-ADcsCertificationAuthority –Credential (Get-Credential) -CAType StandaloneRootCA –CACommonName "csateng-Host1-CA-1" –CADistinguishedNameSuffix "DC=csateng,DC=lab" –CryptoProviderName "RSA#Microsoft Software Key Storage Provider" -KeyLength 2048 –HashAlgorithmName SHA1 –ValidityPeriod Years –ValidityPeriodUnits 3 –DatabaseDirectory "C:\windows\system32\certLog" –LogDirectory "c:\windows\system32\CertLog" –Force
 
     # Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step4-AddUsers.ps1
     New-ADOrganizationalUnit -Name "UserAccounts"
@@ -295,7 +295,5 @@ if ($stage_check -eq $false) {
 
     Remove-Item "c:\stage1complete.txt"
     Remove-Item "c:\stage2complete.txt"
-
-    restart-computer
 
 }
