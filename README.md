@@ -1,7 +1,6 @@
 # CSATENG-SystemBuildScripts
 
 ## DC1 Build Steps
-
 1. Clone Template
 2. Set Password on first boot
 3. Install VMWare tools (Reboot)
@@ -14,7 +13,7 @@ Expand-Archive build.zip
 cd build\CSATENG-SystemBuildScripts-main
 '''
 
-5. run dc1-inital.ps1 (reboot)
+5. Run dc1-inital.ps1 (reboot)
 6. Re-connect via RDP
-7. run dc1-step2.ps1 (reboot) 
-8. run dc1-step3.ps1 (reboot)
+7. Run dc1-step2.ps1 (reboot) 
+8. Run dc1-step3.ps1
