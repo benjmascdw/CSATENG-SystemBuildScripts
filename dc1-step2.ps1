@@ -1,15 +1,21 @@
-# Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step2-PreReqs.ps1
-# add ADDS, DNS, and GPMC
+####
+# Purpose: Add Active Directory related Windows Features
+# Second Step in Labnet Domain Controller Build
+# Author: Ben Mason
+#
+
 . ./dc1-vars.ps1
 
+# Reset DNS Servers from any temporary settings
 Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_servers
 
-# install features 
+# Install Features 
 $addsTools = "RSAT-AD-Tools" 
 Add-WindowsFeature $addsTools 
 Add-WindowsFeature -Name "ad-domain-services" -IncludeAllSubFeature -IncludeManagementTools 
 Add-WindowsFeature -Name "dns" -IncludeAllSubFeature -IncludeManagementTools 
 Add-WindowsFeature -Name "gpmc" -IncludeAllSubFeature -IncludeManagementTools
+Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
 
 # Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step3-Forest.ps1
 # create new forest and add domain controller

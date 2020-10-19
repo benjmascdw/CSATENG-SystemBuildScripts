@@ -1,4 +1,15 @@
+####
+# Purpose: Setup Certifate Services and create simulated users
+# 3rd Step in Labnet Domain Controller Build
+# Author: Ben Mason
+#
+
 . ./dc1-vars.ps1
+
+# Enable Certificate services
+Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
+Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools
+Install-ADcsCertificationAuthority –Credential (Get-Credential) -CAType StandaloneRootCA –CACommonName “csateng-Host1-CA-1” –CADistinguishedNameSuffix “DC=csateng,DC=lab” –CryptoProviderName “RSA#Microsoft Software Key Storage Provider” -KeyLength 2048 –HashAlgorithmName SHA1 –ValidityPeriod Years –ValidityPeriodUnits 3 –DatabaseDirectory “C:\windows\system32\certLog” –LogDirectory “c:\windows\system32\CertLog” –Force
 
 # Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step4-AddUsers.ps1
 New-ADOrganizationalUnit -Name "UserAccounts"
@@ -217,3 +228,5 @@ DSADD user -upn Byron.Lawrence@csateng.lab "cn=Byron.Lawrence,ou=UserAccounts,dc
 DSADD user -upn Marion.Gonzalez@csateng.lab "cn=Marion.Gonzalez,ou=UserAccounts,dc=csateng,dc=lab" -fn "Marion" -ln "Gonzalez" -disabled no -display "Marion Gonzalez" -desc "Nano Spectral Sagittarius Government Service Executive" -office "DevLabs Nano Spectral Sagittarius" -title "Government Service Executive" -company "DevLabs" -PWD "Badpass62004"
 DSADD user -upn Gerald.Wade@csateng.lab "cn=Gerald.Wade,ou=UserAccounts,dc=csateng,dc=lab" -fn "Gerald" -ln "Wade" -disabled no -display "Gerald Wade" -desc "Nano Spectral Sagittarius City Alderman" -office "DevLabs Nano Spectral Sagittarius" -title "City Alderman" -company "DevLabs" -PWD "Badpass35101"
 DSADD user -upn Donna.Garner@csateng.lab "cn=Donna.Garner,ou=UserAccounts,dc=csateng,dc=lab" -fn "Donna" -ln "Garner" -disabled no -display "Donna Garner" -desc "Compu Matrix M City Council Member" -office "DevLabs Compu Matrix M" -title "City Council Member" -company "DevLabs" -PWD "Badpass63050"
+
+restart-computer
