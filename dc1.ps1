@@ -6,7 +6,7 @@
 # File containing Computer Specific Settings
 . ./dc1-vars.ps1
 
-$setipaddress=$false
+$setipaddress = $false
 # $domain_name = "csateng.lab"
 # $hostname = "DC1"
 # $network_interface = "Ethernet0"e
@@ -53,7 +53,6 @@ if ($stage_check -eq $false) {
     Add-WindowsFeature -Name "ad-domain-services" -IncludeAllSubFeature -IncludeManagementTools 
     Add-WindowsFeature -Name "dns" -IncludeAllSubFeature -IncludeManagementTools 
     Add-WindowsFeature -Name "gpmc" -IncludeAllSubFeature -IncludeManagementTools
-    Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
 
     # Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step3-Forest.ps1
     # create new forest and add domain controller
