@@ -1,3 +1,12 @@
+####
+# Purpose: Setup Certifate Services and create simulated users
+# 3rd Step in Labnet Domain Controller Build
+# Author: Ben Mason
+#
+
+$setipaddress=$false
+
+
 $domain_name = "csateng.lab"
 $hostname = "DC2"
 $network_interface = "Ethernet0"
@@ -12,8 +21,12 @@ Rename-Computer -NewName $hostname
 Set-TimeZone -Id $timezone 
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
-New-NetIPAddress –InterfaceAlias $network_interface –IPv4Address $ip_Address –PrefixLength $subnet_mask -DefaultGateway $default_gateway
-Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
+
+if ($setipaddress -eq $true) {
+    New-NetIPAddress –InterfaceAlias $network_interface –IPv4Address $ip_Address –PrefixLength $subnet_mask -DefaultGateway $default_gateway
+    Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
+}
+
 Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
 
 Restart-Computer
