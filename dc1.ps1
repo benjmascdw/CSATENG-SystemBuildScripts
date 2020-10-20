@@ -19,6 +19,9 @@ $default_gateway = "10.89.49.1"
 $dns_servers = "10.89.49.50, 10.89.49.51"
 $dns_forwarder1 = "10.89.49.98"
 $dns_forwarder2 = "10.89.49.99"
+### CA Settings
+$ca_commonname ="csateng-Host1-CA-1"
+$DN_Suffix = "DC=csateng,DC=lab"
 
 ####
 # Purpose: Initial computer configuration
@@ -80,7 +83,7 @@ if ($stage_check -eq $true) {
     # Enable Certificate services
     Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
     Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools
-    Install-ADcsCertificationAuthority –Credential (Get-Credential) -CAType StandaloneRootCA –CACommonName "csateng-Host1-CA-1" –CADistinguishedNameSuffix "DC=csateng,DC=lab" –CryptoProviderName "RSA#Microsoft Software Key Storage Provider" -KeyLength 2048 –HashAlgorithmName SHA1 –ValidityPeriod Years –ValidityPeriodUnits 3 –DatabaseDirectory "C:\windows\system32\certLog" –LogDirectory "c:\windows\system32\CertLog" –Force
+    Install-ADcsCertificationAuthority -Credential (Get-Credential) -CAType StandaloneRootCA -CACommonName $ca_commonname -CADistinguishedNameSuffix $DN_Suffix -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" -KeyLength 2048 -HashAlgorithmName SHA1 -ValidityPeriod Years -ValidityPeriodUnits 3 -DatabaseDirectory "C:\windows\system32\certLog" -LogDirectory "c:\windows\system32\CertLog" –Force
 
     # Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step4-AddUsers.ps1
     New-ADOrganizationalUnit -Name "UserAccounts"
