@@ -17,6 +17,8 @@ $ip_Address = "10.89.49.50"
 $subnet_mask = "26"
 $default_gateway = "10.89.49.1"
 $dns_servers = "10.89.49.50, 10.89.49.51"
+$dns_forwarder1 = "10.89.49.98"
+$dns_forwarder2 = "10.89.49.99"
 
 ####
 # Purpose: Initial computer configuration
@@ -70,6 +72,10 @@ if ($stage_check -eq $false) {
 #
 $stage_check = Test-Path "c:\stage2complete.txt" -PathType Leaf
 if ($stage_check -eq $true) {
+
+    # Set DNS Forwarders
+    Set-DnsServerForwarder -IPAddress $dns_forwarder1 -PassThru
+    Add-DnsServerForwarder -IPAddress $dns_forwarder2 -PassThru
 
     # Enable Certificate services
     Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
