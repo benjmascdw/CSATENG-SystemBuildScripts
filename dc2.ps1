@@ -4,8 +4,6 @@
 # Author: Ben Mason
 #
 
-$setipaddress=$false
-
 ### Required settings
 $domain_name = "csateng.lab"
 $hostname = "DC2"
@@ -32,17 +30,13 @@ if ($stage_check -eq $false) {
     }
 
     Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
-
     New-Item -Path "c:\" -Name "stage1complete.txt" -ItemType "file" -Value "Step one complete."
-
     Restart-Computer
+} else {
+    # http://harmikbatth.com/2017/04/25/active-directory-installing-second-or-additional-domain-controller/#page-content
+    Install-WindowsFeature -Name AD-Domain-Services –IncludeManagementTools
+    Import-module ADDSDeployment
+    Remove-Item "c:\stage1complete.txt"
 
+    Install-ADDSDomainController -Credential (Get-Credential) -NoGlobalCatalog:$false -CreateDnsDelegation:$false -CriticalReplicationOnly:$false -DatabasePath "C:\Windows\NTDS" -DomainName $domain_name -InstallDns:$true -LogPath "C:\Windows\NTDS" -NoRebootOnCompletion:$false -SiteName "Default-First-Site-Name" -SysvolPath "C:\Windows\SYSVOL" -Force:$true
 }
-
-Remove-Item "c:\stage1complete.txt"
-# http://harmikbatth.com/2017/04/25/active-directory-installing-second-or-additional-domain-controller/#page-content
-Install-WindowsFeature -Name AD-Domain-Services –IncludeManagementTools
-Import-module ADDSDeployment
-
-Install-ADDSDomainController -Credential (Get-Credential) -NoGlobalCatalog:$false -CreateDnsDelegation:$false -CriticalReplicationOnly:$false -DatabasePath "C:\Windows\NTDS" -DomainName $domain_name -InstallDns:$true -LogPath "C:\Windows\NTDS" -NoRebootOnCompletion:$false -SiteName "Default-First-Site-Name" -SysvolPath "C:\Windows\SYSVOL" -Force:$true
-

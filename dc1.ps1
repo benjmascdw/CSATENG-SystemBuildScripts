@@ -50,8 +50,7 @@ if ($stage_check -eq $false) {
     Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_servers
 
     # Install Features 
-    $addsTools = "RSAT-AD-Tools" 
-    Add-WindowsFeature $addsTools 
+    Add-WindowsFeature "RSAT-AD-Tools" 
     Add-WindowsFeature -Name "ad-domain-services" -IncludeAllSubFeature -IncludeManagementTools 
     Add-WindowsFeature -Name "dns" -IncludeAllSubFeature -IncludeManagementTools 
     Add-WindowsFeature -Name "gpmc" -IncludeAllSubFeature -IncludeManagementTools
