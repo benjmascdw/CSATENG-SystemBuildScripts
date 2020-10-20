@@ -1,6 +1,5 @@
 ####
-# Purpose: Setup Certifate Services and create simulated users
-# 3rd Step in Labnet Domain Controller Build
+# Purpose: Create DC2 second domain controller
 # Author: Ben Mason
 #
 
