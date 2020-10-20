@@ -6,20 +6,22 @@
 
 $setipaddress=$false
 
-
+### Required settings
 $domain_name = "csateng.lab"
 $hostname = "DC2"
+$timezone = "Central Standard Time"
+### Network Settings
+# set $setipaddress to $true to set IP addressing
+$setipaddress = $false  
 $network_interface = "Ethernet0"
 $ip_Address = "10.89.49.51"
 $subnet_mask = "26"
 $default_gateway = "10.89.49.1"
 $dns_Servers = "10.89.49.50, 10.89.49.51"
-$timezone = "Central Standard Time"
 
 $stage_check = Test-Path "c:\stage1complete.txt" -PathType Leaf
 if ($stage_check -eq $false) {
     Rename-Computer -NewName $hostname 
-    # Set timezone
     Set-TimeZone -Id $timezone 
     Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -name "fDenyTSConnections" -value 0
     Enable-NetFirewallRule -DisplayGroup "Remote Desktop"

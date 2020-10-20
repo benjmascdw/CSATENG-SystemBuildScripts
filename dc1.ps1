@@ -3,18 +3,20 @@
 # Author: Ben Mason
 #
 
-# Disable IP Address configurtation
-$setipaddress = $false
-#
+
+### Required settings
+$hostname = "DC1"
 $domain_name = "csateng.lab"
 $netbiosName = "CSATENG"
-$hostname = "DC1"
 $network_interface = "Ethernet0"
+$timezone = "Central Standard Time"
+### Network Settings
+# set $setipaddress to $true to set IP addressing
+$setipaddress = $false  
 $ip_Address = "10.89.49.50"
 $subnet_mask = "26"
 $default_gateway = "10.89.49.1"
 $dns_servers = "10.89.49.50, 10.89.49.51"
-$timezone = "Central Standard Time"
 
 ####
 # Purpose: Initial computer configuration
@@ -68,7 +70,7 @@ if ($stage_check -eq $false) {
 # 3rd Step in Labnet Domain Controller Build
 #
 $stage_check = Test-Path "c:\stage2complete.txt" -PathType Leaf
-if ($stage_check -eq $false) {
+if ($stage_check -eq $true) {
 
     # Enable Certificate services
     Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
