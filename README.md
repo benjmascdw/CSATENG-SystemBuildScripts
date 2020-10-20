@@ -6,12 +6,12 @@
 3. Install VMWare tools (Reboot)
 4. Open a powershell prompt and run the following commands to Download and extract the build scripts
 
-'''
+```
 cd Desktop
 (New-Object Net.WebClient).downloadFile("https://github.com/benjmascdw/CSATENG-SystemBuildScripts/archive/main.zip", "c:\Users\Administrator\build.zip")
 Expand-Archive build.zip
 cd build\CSATENG-SystemBuildScripts-main
-'''
+```
 
 5. Run dc1.ps1 (reboot)
     - Sets inital OS settings
@@ -30,12 +30,12 @@ cd build\CSATENG-SystemBuildScripts-main
 3. Install VMWare tools (Reboot)
 4. Open a powershell prompt and run the following commands to Download and extract the build scripts
 
-'''
+```
 cd Desktop
 (New-Object Net.WebClient).downloadFile("https://github.com/benjmascdw/CSATENG-SystemBuildScripts/archive/main.zip", "c:\Users\Administrator\build.zip")
 Expand-Archive build.zip
 cd build\CSATENG-SystemBuildScripts-main
-'''
+```
 
 5. Run dc2.ps1 (reboot)
 6. Re-connect via RDP
