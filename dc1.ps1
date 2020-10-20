@@ -35,7 +35,7 @@ if ($stage_check -eq $false) {
     Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 
     if ($setipaddress -eq $true) {
-        New-NetIPAddress â€“InterfaceAlias $network_interface â€“IPv4Address $ip_Address â€“PrefixLength $subnet_mask -DefaultGateway $default_gateway
+        New-NetIPAddress –InterfaceAlias $network_interface –IPv4Address $ip_Address –PrefixLength $subnet_mask -DefaultGateway $default_gateway
         Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
     }
     # Set Adapter Category
@@ -83,7 +83,7 @@ if ($stage_check -eq $true) {
     # Enable Certificate services
     Add-WindowsFeature -Name "AD-Certificate" -IncludeAllSubFeature -IncludeManagementTools
     Install-WindowsFeature ADCS-Cert-Authority -IncludeManagementTools
-    Install-ADcsCertificationAuthority -Credential (Get-Credential) -CAType StandaloneRootCA -CACommonName $ca_commonname -CADistinguishedNameSuffix $DN_Suffix -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" -KeyLength 2048 -HashAlgorithmName SHA1 -ValidityPeriod Years -ValidityPeriodUnits 3 -DatabaseDirectory "C:\windows\system32\certLog" -LogDirectory "c:\windows\system32\CertLog" â€“Force
+    Install-ADcsCertificationAuthority -Credential (Get-Credential) -CAType StandaloneRootCA -CACommonName $ca_commonname -CADistinguishedNameSuffix $DN_Suffix -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" -KeyLength 2048 -HashAlgorithmName SHA1 -ValidityPeriod Years -ValidityPeriodUnits 3 -DatabaseDirectory "C:\windows\system32\certLog" -LogDirectory "c:\windows\system32\CertLog" –Force
 
     # Source: https://github.com/DefensiveOrigins/APT06202001/blob/master/Lab-DomainBuildScripts/ADDS-Step4-AddUsers.ps1
     New-ADOrganizationalUnit -Name "UserAccounts"

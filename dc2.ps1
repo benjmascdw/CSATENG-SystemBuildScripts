@@ -33,7 +33,7 @@ if ($stage_check -eq $false) {
     Restart-Computer
 } else {
     # http://harmikbatth.com/2017/04/25/active-directory-installing-second-or-additional-domain-controller/#page-content
-    Install-WindowsFeature -Name AD-Domain-Services â€“IncludeManagementTools
+    Install-WindowsFeature -Name AD-Domain-Services –IncludeManagementTools
     Import-module ADDSDeployment
     Remove-Item "c:\stage1complete.txt"
 
