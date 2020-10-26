@@ -25,15 +25,14 @@ if ($stage_check -eq $false) {
 
     if ($setipaddress -eq $true) {
         New-NetIPAddress -InterfaceAlias $network_interface -IPv4Address $ip_Address -PrefixLength $subnet_mask -DefaultGateway $default_gateway
-        Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
     }
-
+    Set-DnsClientServerAddress -InterfaceAlias $network_interface -ServerAddresses $dns_Servers
     Set-NetConnectionProfile -InterfaceAlias $network_interface -NetworkCategory Private
     New-Item -Path "c:\" -Name "stage1complete.txt" -ItemType "file" -Value "Step one complete."
     Restart-Computer
 } else {
     # http://harmikbatth.com/2017/04/25/active-directory-installing-second-or-additional-domain-controller/#page-content
-    Install-WindowsFeature -Name AD-Domain-Services –IncludeManagementTools
+    Install-WindowsFeature -Name AD-Domain-Services ï¿½IncludeManagementTools
     Import-module ADDSDeployment
     Remove-Item "c:\stage1complete.txt"
 
